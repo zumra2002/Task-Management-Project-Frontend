@@ -41,26 +41,22 @@ export default function TaskList() {
   useEffect(() => {
     let data = [...tasks];
 
-    // Search
     if (search.trim()) {
       data = data.filter((t) =>
         t.title.toLowerCase().includes(search.toLowerCase())
       );
     }
 
-    // Filter by priority
     if (priorityFilter !== "All") {
       data = data.filter((t) => t.priority === priorityFilter);
     }
 
-    // Filter by status
     if (statusFilter !== "All") {
       data = data.filter((t) =>
         statusFilter === "Completed" ? t.isCompleted : !t.isCompleted
       );
     }
 
-    // Sorting
     if (sortBy === "due_date") {
       data.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
     } else if (sortBy === "priority") {
@@ -102,21 +98,21 @@ export default function TaskList() {
   };
 
   return (
-    <div className="p-6">
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 p-6">
       {/* Controls */}
-      <div className="flex flex-wrap gap-4 items-center mb-6">
+      <div className="flex flex-wrap gap-4 items-center mb-6 bg-white p-4 rounded-2xl shadow-md">
         <input
           type="text"
-          placeholder="Search by title..."
+          placeholder="🔍 Search by title..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="px-3 py-2 border rounded-lg shadow-sm focus:ring focus:ring-blue-300 outline-none"
+          className="px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-400 outline-none w-64"
         />
 
         <select
           value={priorityFilter}
           onChange={(e) => setPriorityFilter(e.target.value)}
-          className="px-3 py-2 border rounded-lg shadow-sm"
+          className="px-4 py-2 border border-gray-300 rounded-xl shadow-sm bg-white focus:ring-2 focus:ring-indigo-400"
         >
           <option value="All">All Priorities</option>
           <option value="High">High</option>
@@ -127,7 +123,7 @@ export default function TaskList() {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="px-3 py-2 border rounded-lg shadow-sm"
+          className="px-4 py-2 border border-gray-300 rounded-xl shadow-sm bg-white focus:ring-2 focus:ring-indigo-400"
         >
           <option value="All">All Status</option>
           <option value="Completed">Completed</option>
@@ -137,14 +133,14 @@ export default function TaskList() {
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
-          className="px-3 py-2 border rounded-lg shadow-sm"
+          className="px-4 py-2 border border-gray-300 rounded-xl shadow-sm bg-white focus:ring-2 focus:ring-indigo-400"
         >
           <option value="due_date">Sort by Due Date</option>
           <option value="priority">Sort by Priority</option>
         </select>
 
-        <Link to="/AddTask">
-          <button className="ml-auto px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">
+        <Link to="/AddTask" className="ml-auto">
+          <button className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:scale-105 hover:shadow-xl transition transform">
             + Add New Task
           </button>
         </Link>
@@ -152,9 +148,9 @@ export default function TaskList() {
 
       {/* Edit Task Modal */}
       {editingTask && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md">
-            <h2 className="text-xl font-bold mb-4">Edit Task</h2>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 backdrop-blur-sm z-50">
+          <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-lg animate-fadeIn">
+            <h2 className="text-xl font-bold mb-4">✏️ Edit Task</h2>
 
             <form
               onSubmit={async (e) => {
@@ -185,7 +181,7 @@ export default function TaskList() {
                 onChange={(e) =>
                   setEditingTask({ ...editingTask, title: e.target.value })
                 }
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
                 placeholder="Title"
                 required
               />
@@ -195,7 +191,7 @@ export default function TaskList() {
                 onChange={(e) =>
                   setEditingTask({ ...editingTask, description: e.target.value })
                 }
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
                 rows="3"
                 placeholder="Description"
                 required
@@ -207,7 +203,7 @@ export default function TaskList() {
                 onChange={(e) =>
                   setEditingTask({ ...editingTask, due_date: e.target.value })
                 }
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
                 required
               />
 
@@ -216,7 +212,7 @@ export default function TaskList() {
                 onChange={(e) =>
                   setEditingTask({ ...editingTask, priority: e.target.value })
                 }
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-400 outline-none"
               >
                 <option value="High">High</option>
                 <option value="Medium">Medium</option>
@@ -233,23 +229,24 @@ export default function TaskList() {
                       isCompleted: e.target.checked,
                     })
                   }
+                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 />
-                <span>Mark as Completed</span>
+                <span className="text-gray-700">Mark as Completed</span>
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex gap-3 mt-4">
                 <button
                   type="submit"
-                  className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+                  className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-2.5 rounded-xl font-semibold hover:scale-105 hover:shadow-lg transition"
                 >
-                  Save
+                  💾 Save
                 </button>
                 <button
                   type="button"
                   onClick={closeEditModal}
-                  className="flex-1 bg-gray-300 text-gray-800 py-2 rounded-lg hover:bg-gray-400 transition"
+                  className="flex-1 bg-gray-200 text-gray-800 py-2.5 rounded-xl hover:bg-gray-300 transition"
                 >
-                  Cancel
+                  ❌ Cancel
                 </button>
               </div>
             </form>
@@ -270,23 +267,23 @@ export default function TaskList() {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-center items-center gap-2 mt-6">
+      <div className="flex justify-center items-center gap-3 mt-8">
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
-          className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-200 rounded-full hover:bg-gray-300 disabled:opacity-50 transition"
         >
-          Prev
+          ⬅ Prev
         </button>
-        <span className="px-2">
+        <span className="px-4 py-1 bg-white shadow rounded-xl text-gray-700 font-medium">
           Page {currentPage} of {totalPages || 1}
         </span>
         <button
           onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-200 rounded-full hover:bg-gray-300 disabled:opacity-50 transition"
         >
-          Next
+          Next ➡
         </button>
       </div>
     </div>
