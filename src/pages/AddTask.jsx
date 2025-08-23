@@ -1,7 +1,7 @@
-
-import { useState } from 'react'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import bgImage from "../assets/tk2.webp"; // add tk2.webp
 
 function AddTask() {
   const [task, setTask] = useState({
@@ -27,11 +27,9 @@ function AddTask() {
     e.preventDefault();
 
     try {
-      const token = localStorage.getItem("token"); // get JWT
+      const token = localStorage.getItem("token");
       const res = await axios.post("http://localhost:5000/api/tasks/add", task, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setMessage(res.data.message);
       setTask({
@@ -48,8 +46,11 @@ function AddTask() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg p-8">
+    <div
+      className="flex justify-center items-center min-h-screen p-6 bg-no-repeat bg-center bg-cover"
+      style={{ backgroundImage: `url(${bgImage})` }}
+    >
+      <div className="w-full max-w-lg bg-white/90 rounded-2xl shadow-lg p-8 backdrop-blur-sm">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Add New Task</h2>
 
         {message && (
@@ -59,9 +60,7 @@ function AddTask() {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Title */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Title
-            </label>
+            <label className="block text-gray-700 font-medium mb-1">Title</label>
             <input
               type="text"
               name="title"
@@ -75,9 +74,7 @@ function AddTask() {
 
           {/* Description */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Description
-            </label>
+            <label className="block text-gray-700 font-medium mb-1">Description</label>
             <textarea
               name="description"
               value={task.description}
@@ -91,9 +88,7 @@ function AddTask() {
 
           {/* Due Date */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Due Date
-            </label>
+            <label className="block text-gray-700 font-medium mb-1">Due Date</label>
             <input
               type="date"
               name="due_date"
@@ -106,9 +101,7 @@ function AddTask() {
 
           {/* Priority */}
           <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Priority
-            </label>
+            <label className="block text-gray-700 font-medium mb-1">Priority</label>
             <select
               name="priority"
               value={task.priority}
@@ -131,9 +124,7 @@ function AddTask() {
               onChange={handleChange}
               className="h-4 w-4 text-blue-600 border-gray-300 rounded"
             />
-            <label className="text-gray-700 font-medium">
-              Mark as Completed
-            </label>
+            <label className="text-gray-700 font-medium">Mark as Completed</label>
           </div>
 
           {/* Submit */}
@@ -149,4 +140,4 @@ function AddTask() {
   );
 }
 
-export default AddTask
+export default AddTask;
