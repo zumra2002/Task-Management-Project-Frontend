@@ -1,3 +1,7 @@
+<img width="1890" height="922" alt="tasklist" src="https://github.com/user-attachments/assets/8b9bbb05-f947-46b2-b715-1a28c0f3a886" />
+<img width="1890" height="922" alt="tasklist" src="https://github.com/user-attachments/assets/766793fb-d85c-4de0-9993-e2190edfe156" />
+<img width="1867" height="922" alt="add task" src="https://github.com/user-attachments/assets/a80504b5-e504-46d6-ab22-28de85d12446" />
+<img width="1836" height="910" alt="edit task" src="https://github.com/user-attachments/assets/c7acf98a-8299-47a7-a4eb-70b618343837" />
 <img width="1888" height="918" alt="sign in" src="https://github.com/user-attachments/assets/33db467a-e2ba-4dd1-9a1e-e0755d493705" /># Task-Management-Project-Frontend
 📝 Task Manager Web Application
 
