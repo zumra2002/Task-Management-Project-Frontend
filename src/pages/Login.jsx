@@ -29,31 +29,30 @@ function Login() {
       });
   };
 
-  // Redirect to the Register Page
   const handleSignUp = () => {
     navigate('/register');
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center bg-picture">
-      <div className="w-[400px] bg-white/80 backdrop-blur-xl shadow-2xl rounded-2xl p-8">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Welcome Back
+    <div className="w-full h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100">
+      <div className="w-[420px] bg-white/90 backdrop-blur-xl shadow-2xl rounded-3xl p-8">
+        <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">
+          Welcome Back 👋
         </h2>
 
-        <form onSubmit={handleOnSubmit} className="flex flex-col space-y-4">
+        <form onSubmit={handleOnSubmit} className="flex flex-col space-y-5">
           <input
             type="email"
-            placeholder="Email"
-            className="w-full h-[40px] px-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your email"
+            className="w-full h-[50px] px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm text-gray-700 placeholder-gray-400"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <input
             type="password"
-            placeholder="Password"
-            className="w-full h-[40px] px-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your password"
+            className="w-full h-[50px] px-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm text-gray-700 placeholder-gray-400"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -61,13 +60,13 @@ function Login() {
           {/* Sign In Button */}
           <button
             type="submit"
-            className="w-full h-[45px] bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300"
+            className="w-full h-[50px] bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold text-lg shadow-md hover:opacity-90 active:scale-95 transition-all duration-200"
           >
             Sign In
           </button>
         </form>
 
-        <p className="text-sm text-gray-600 text-center mt-5">
+        <p className="text-sm text-gray-600 text-center mt-6">
           Don’t have an account?{' '}
           <span
             onClick={handleSignUp}
