@@ -7,7 +7,7 @@ import { toast } from 'react-hot-toast';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -20,29 +20,32 @@ function Login() {
       .then((res) => {
         toast.success('Login successful');
         const token = res.data.token;
-        const decoded = jwtDecode(token);
+        jwtDecode(token); // decoded if needed
         localStorage.setItem('token', token);
         navigate('/list');
       })
       .catch((err) => {
-        toast.error(err.response.data);
+        toast.error(err.response?.data || 'Login failed');
       });
   };
 
-  // Redirect to the Register Page when user clicks "Sign Up"
+  // Redirect to the Register Page
   const handleSignUp = () => {
     navigate('/register');
   };
 
   return (
-    <form onSubmit={handleOnSubmit}>
-      <div className="w-full h-screen flex items-center justify-center bg-picture">
-        <div className="w-[400px] h-[350px] flex items-center justify-center flex-col relative backdrop-blur-2xl rounded-2xl p-6">
-          
+    <div className="w-full h-screen flex items-center justify-center bg-picture">
+      <div className="w-[400px] bg-white/80 backdrop-blur-xl shadow-2xl rounded-2xl p-8">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          Welcome Back
+        </h2>
+
+        <form onSubmit={handleOnSubmit} className="flex flex-col space-y-4">
           <input
             type="email"
             placeholder="Email"
-            className="w-[300px] h-[40px] pl-3 mb-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full h-[40px] px-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -50,7 +53,7 @@ function Login() {
           <input
             type="password"
             placeholder="Password"
-            className="w-[300px] h-[40px] pl-3 mb-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full h-[40px] px-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -58,22 +61,23 @@ function Login() {
           {/* Sign In Button */}
           <button
             type="submit"
-            className="w-[120px] h-[40px] bg-red-500 mt-4 rounded-2xl cursor-pointer text-white font-medium hover:bg-red-600"
+            className="w-full h-[45px] bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300"
           >
             Sign In
           </button>
+        </form>
 
-          {/* Sign Up Button */}
-          <button
-            type="button"
+        <p className="text-sm text-gray-600 text-center mt-5">
+          Don’t have an account?{' '}
+          <span
             onClick={handleSignUp}
-            className="w-[120px] h-[40px] bg-blue-500 mt-3 rounded-2xl cursor-pointer text-white font-medium hover:bg-blue-600"
+            className="text-blue-600 font-semibold cursor-pointer hover:underline"
           >
             Sign Up
-          </button>
-        </div>
+          </span>
+        </p>
       </div>
-    </form>
+    </div>
   );
 }
 
