@@ -37,8 +37,7 @@ const UserRegister = () => {
       return;
     }
 
-    const emailPattern =
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(email)) {
       setError('Please enter a valid email.');
       toast.error('Please enter a valid email.');
@@ -54,10 +53,7 @@ const UserRegister = () => {
     }
 
     try {
-      await axios.post(
-        'http://localhost:5000/api/users/register',
-        formData
-      );
+      await axios.post('http://localhost:5000/api/users/register', formData);
 
       setSuccessMessage('Registration successful!');
       toast.success('Customer added successfully!');
@@ -88,7 +84,11 @@ const UserRegister = () => {
 
   return (
     <div className="w-full h-screen flex items-center justify-center bg-picture">
-      <div className="w-[400px] h-[500px] flex items-center justify-center flex-col relative backdrop-blur-2xl rounded-2xl p-6">
+      <div className="w-[420px] bg-white/80 backdrop-blur-xl shadow-2xl rounded-2xl p-8">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          Create an Account
+        </h2>
+
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
         {successMessage && (
           <p className="text-green-500 text-center mb-4">
@@ -96,11 +96,12 @@ const UserRegister = () => {
           </p>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6 w-full">
-          <div className="flex flex-col">
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* First Name */}
+          <div>
             <label
               htmlFor="firstname"
-              className="text-lg font-medium text-gray-700 mb-2 text-left"
+              className="block text-sm font-medium text-gray-700 mb-1"
             >
               First Name
             </label>
@@ -111,14 +112,15 @@ const UserRegister = () => {
               value={formData.firstname}
               onChange={handleChange}
               placeholder="Enter first name"
-              className="input-field"
+              className="w-full h-[40px] px-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          <div className="flex flex-col">
+          {/* Last Name */}
+          <div>
             <label
               htmlFor="lastname"
-              className="text-lg font-medium text-gray-700 mb-2 text-left"
+              className="block text-sm font-medium text-gray-700 mb-1"
             >
               Last Name
             </label>
@@ -129,14 +131,15 @@ const UserRegister = () => {
               value={formData.lastname}
               onChange={handleChange}
               placeholder="Enter last name"
-              className="input-field"
+              className="w-full h-[40px] px-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          <div className="flex flex-col">
+          {/* Email */}
+          <div>
             <label
               htmlFor="email"
-              className="text-lg font-medium text-gray-700 mb-2 text-left"
+              className="block text-sm font-medium text-gray-700 mb-1"
             >
               Email
             </label>
@@ -147,14 +150,15 @@ const UserRegister = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="Enter email"
-              className="input-field"
+              className="w-full h-[40px] px-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          <div className="flex flex-col">
+          {/* Password */}
+          <div>
             <label
               htmlFor="password"
-              className="text-lg font-medium text-gray-700 mb-2 text-left"
+              className="block text-sm font-medium text-gray-700 mb-1"
             >
               Password
             </label>
@@ -165,22 +169,31 @@ const UserRegister = () => {
               value={formData.password}
               onChange={handleChange}
               placeholder="Enter password"
-              className="input-field"
+              className="w-full h-[40px] px-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          <div className="flex justify-end">
-            <button
-              type="submit"
-              className={`w-full px-2 py-2 bg-gray-800 text-sm text-white rounded-md hover:bg-gray-700 focus:outline-none ${
-                loading ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-              disabled={loading}
-            >
-              {loading ? 'Loading...' : 'Register'}
-            </button>
-          </div>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className={`w-full h-[45px] bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300 ${
+              loading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            disabled={loading}
+          >
+            {loading ? 'Registering...' : 'Register'}
+          </button>
         </form>
+
+        <p className="text-sm text-gray-600 text-center mt-5">
+          Already have an account?{' '}
+          <span
+            onClick={() => navigate('/')}
+            className="text-blue-600 font-semibold cursor-pointer hover:underline"
+          >
+            Sign In
+          </span>
+        </p>
       </div>
     </div>
   );
