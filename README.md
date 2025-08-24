@@ -86,14 +86,15 @@ Add, update, delete tasks
 Task list with filters
 
 Responsive UI with TailwindCSS
+  
 
+Screenshots    
+<img width="1836" height="910" alt="edit task" src="https://github.com/user-attachments/assets/c624f62b-226a-41b1-bd29-27c49f01d38c" />
+<img width="1867" height="922" alt="add task" src="https://github.com/user-attachments/assets/6293c181-23f7-4f6f-874c-c0ad66c7c08b" />
+<img width="1890" height="922" alt="tasklist" src="https://github.com/user-attachments/assets/13c72dde-3e0f-452e-a4ed-944cbfb9845e" />
+<img width="1897" height="917" alt="sign up" src="https://github.com/user-attachments/assets/e1ff41cf-028a-42d6-8501-a8265bb48a12" />
+<img width="1888" height="918" alt="sign in" src="https://github.com/user-attachments/assets/98374e1a-25a8-42b9-b3a4-771659d6c0a9" />
 
-Screenshots
-<img width="1888" height="918" alt="sign in" src="https://github.com/user-attachments/assets/3d1a0dba-e5a1-4075-a80d-e9939f4316b0" />
-<img width="1897" height="917" alt="sign up" src="https://github.com/user-attachments/assets/484b2094-b8ce-4e6e-8e31-328bc63141ab" />
-<img width="1890" height="922" alt="tasklist" src="https://github.com/user-attachments/assets/4921a72a-99d0-4f11-b0a4-441828223549" />
-<img width="1867" height="922" alt="add task" src="https://github.com/user-attachments/assets/f4528a7a-5f9f-44c5-9ed5-fb6ac903e4d9" />
-<img width="1836" height="910" alt="edit task" src="https://github.com/user-attachments/assets/bf627670-6a05-4fec-a8e5-f8fb310d2480" />
 
 
 
