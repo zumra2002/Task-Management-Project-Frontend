@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import { Link,useNavigate  } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 const UserRegister = () => {
   const [formData, setFormData] = useState({
@@ -9,14 +9,13 @@ const UserRegister = () => {
     lastname: '',
     email: '',
     password: '',
-    
   });
 
   const [error, setError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +27,7 @@ const navigate = useNavigate();
     setError('');
     setLoading(true);
 
-    const { firstname, lastname, email, password} = formData;
+    const { firstname, lastname, email, password } = formData;
 
     // Validation
     if (!firstname || !lastname || !email || !password) {
@@ -38,8 +37,8 @@ const navigate = useNavigate();
       return;
     }
 
-    
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailPattern =
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(email)) {
       setError('Please enter a valid email.');
       toast.error('Please enter a valid email.');
@@ -47,7 +46,6 @@ const navigate = useNavigate();
       return;
     }
 
-    
     if (password.length < 8) {
       setError('Password must be at least 8 characters long.');
       toast.error('Password must be at least 8 characters long.');
@@ -55,32 +53,28 @@ const navigate = useNavigate();
       return;
     }
 
-  
-
     try {
-      
-      const response = await axios.post(
-        'http://localhost:5000/api/users/register', 
+      await axios.post(
+        'http://localhost:5000/api/users/register',
         formData
       );
 
-      
       setSuccessMessage('Registration successful!');
-      toast.success('Customer added successfully!'); 
+      toast.success('Customer added successfully!');
       setFormData({
         firstname: '',
         lastname: '',
         email: '',
         password: '',
-       
-      }); 
-        navigate('/');
+      });
+      navigate('/');
     } catch (err) {
-      
-      console.error('Error:', err.response ? err.response.data : err.message);
+      console.error(
+        'Error:',
+        err.response ? err.response.data : err.message
+      );
 
       if (err.response) {
-        
         setError(err.response.data.message || 'Error registering user.');
         toast.error(err.response.data.message || 'Error registering user.');
       } else {
@@ -94,24 +88,22 @@ const navigate = useNavigate();
 
   return (
     <div className="w-full h-screen flex items-center justify-center bg-picture">
-      <div className="w-[400px] h-[600px] flex items-center justify-center flex-col relative backdrop-blur-2xl rounded-2xl">
-        
-        
+      <div className="w-[400px] h-[500px] flex items-center justify-center flex-col relative backdrop-blur-2xl rounded-2xl p-6">
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-        {successMessage && <p className="text-green-500 text-center mb-4">{successMessage}</p>}
+        {successMessage && (
+          <p className="text-green-500 text-center mb-4">
+            {successMessage}
+          </p>
+        )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="w-full flex justify-center mb-6">
-            <img
-              src="/logo.png"
-              alt="logo"
-              className="w-[100px] h-[100px] rounded-full border-[1px]"
-            />
-          </div>
-          
+        <form onSubmit={handleSubmit} className="space-y-6 w-full">
           <div className="flex flex-col">
-          
-            <label htmlFor="firstname" className="text-lg font-medium text-gray-700 mb-2 text-left">First Name</label>
+            <label
+              htmlFor="firstname"
+              className="text-lg font-medium text-gray-700 mb-2 text-left"
+            >
+              First Name
+            </label>
             <input
               type="text"
               id="firstname"
@@ -124,7 +116,12 @@ const navigate = useNavigate();
           </div>
 
           <div className="flex flex-col">
-            <label htmlFor="lastname" className="text-lg font-medium text-gray-700 mb-2 text-left">Last Name</label>
+            <label
+              htmlFor="lastname"
+              className="text-lg font-medium text-gray-700 mb-2 text-left"
+            >
+              Last Name
+            </label>
             <input
               type="text"
               id="lastname"
@@ -137,7 +134,12 @@ const navigate = useNavigate();
           </div>
 
           <div className="flex flex-col">
-            <label htmlFor="email" className="text-lg font-medium text-gray-700 mb-2 text-left">Email</label>
+            <label
+              htmlFor="email"
+              className="text-lg font-medium text-gray-700 mb-2 text-left"
+            >
+              Email
+            </label>
             <input
               type="email"
               id="email"
@@ -150,7 +152,12 @@ const navigate = useNavigate();
           </div>
 
           <div className="flex flex-col">
-            <label htmlFor="password" className="text-lg font-medium text-gray-700 mb-2 text-left">Password</label>
+            <label
+              htmlFor="password"
+              className="text-lg font-medium text-gray-700 mb-2 text-left"
+            >
+              Password
+            </label>
             <input
               type="password"
               id="password"
@@ -165,16 +172,14 @@ const navigate = useNavigate();
           <div className="flex justify-end">
             <button
               type="submit"
-              className={`w-full px-2 py-1 bg-gray-800 text-sm text-white rounded-md hover:bg-gray-400 focus:outline-none ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`w-full px-2 py-2 bg-gray-800 text-sm text-white rounded-md hover:bg-gray-700 focus:outline-none ${
+                loading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
               disabled={loading}
             >
               {loading ? 'Loading...' : 'Register'}
             </button>
-            
           </div>
-          
-
-       
         </form>
       </div>
     </div>
