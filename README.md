@@ -91,11 +91,9 @@ Responsive UI with TailwindCSS
 Screenshots
 
 
-<img width="1888" height="918" alt="sign in" src="https://github.com/user-attachments/assets/c8341556-9489-48cb-bfb4-bc094316f3cd" />
-<img width="1897" height="917" alt="sign up" src="https://github.com/user-attachments/assets/d3513b7a-f1ac-4cc1-8ff6-a8a8eaa592bf" />
-<img width="1890" height="922" alt="tasklist" src="https://github.com/user-attachments/assets/61854401-3a16-4ecd-b138-9aed37457488" />
-<img width="1867" height="922" alt="add task" src="https://github.com/user-attachments/assets/4052135d-c8c2-4590-8deb-2e868f54f0f7" />
-<img width="1836" height="910" alt="edit task" src="https://github.com/user-attachments/assets/ae588a81-6b78-4722-b396-05a25a9d10c8" />
+<img width="1897" height="917" alt="sign up" src="https://github.com/user-attachments/assets/506c65dd-55e6-476d-83c6-aa9b655eddd3" />
+<img width="1888" height="918" alt="sign in" src="https://github.com/user-attachments/assets/4923957d-bd04-46ae-bbe9-e1c9c6ff49f8" />
+
 
 
 
