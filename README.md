@@ -1,8 +1,4 @@
-<img width="1890" height="922" alt="tasklist" src="https://github.com/user-attachments/assets/8b9bbb05-f947-46b2-b715-1a28c0f3a886" />
-<img width="1890" height="922" alt="tasklist" src="https://github.com/user-attachments/assets/766793fb-d85c-4de0-9993-e2190edfe156" />
-<img width="1867" height="922" alt="add task" src="https://github.com/user-attachments/assets/a80504b5-e504-46d6-ab22-28de85d12446" />
-<img width="1836" height="910" alt="edit task" src="https://github.com/user-attachments/assets/c7acf98a-8299-47a7-a4eb-70b618343837" />
-<img width="1888" height="918" alt="sign in" src="https://github.com/user-attachments/assets/33db467a-e2ba-4dd1-9a1e-e0755d493705" /># Task-Management-Project-Frontend
+
 📝 Task Manager Web Application
 
 A full-stack Task Manager web application built using the MERN Stack (MongoDB, Express, React, Node.js).
@@ -93,10 +89,12 @@ Responsive UI with TailwindCSS
 
 
 Screenshots
+<img width="1888" height="918" alt="sign in" src="https://github.com/user-attachments/assets/3d1a0dba-e5a1-4075-a80d-e9939f4316b0" />
+<img width="1897" height="917" alt="sign up" src="https://github.com/user-attachments/assets/484b2094-b8ce-4e6e-8e31-328bc63141ab" />
+<img width="1890" height="922" alt="tasklist" src="https://github.com/user-attachments/assets/4921a72a-99d0-4f11-b0a4-441828223549" />
+<img width="1867" height="922" alt="add task" src="https://github.com/user-attachments/assets/f4528a7a-5f9f-44c5-9ed5-fb6ac903e4d9" />
+<img width="1836" height="910" alt="edit task" src="https://github.com/user-attachments/assets/bf627670-6a05-4fec-a8e5-f8fb310d2480" />
 
-
-<img width="1897" height="917" alt="sign up" src="https://github.com/user-attachments/assets/506c65dd-55e6-476d-83c6-aa9b655eddd3" />
-<img width="1888" height="918" alt="sign in" src="https://github.com/user-attachments/assets/4923957d-bd04-46ae-bbe9-e1c9c6ff49f8" />
 
 
 
