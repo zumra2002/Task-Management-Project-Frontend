@@ -12,7 +12,18 @@ export default function TaskList() {
   const [statusFilter, setStatusFilter] = useState("All");
   const [sortBy, setSortBy] = useState("due_date");
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Edit modal state
   const [editingTask, setEditingTask] = useState(null);
+  const [editForm, setEditForm] = useState({
+    title: "",
+    description: "",
+    due_date: "",
+    priority: "Medium",
+    isCompleted: false,
+  });
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   const itemsPerPage = 6;
 
@@ -20,7 +31,10 @@ export default function TaskList() {
   useEffect(() => {
     const fetchTasks = async () => {
       const token = localStorage.getItem("token");
-      if (!token) return console.error("No token found, please log in.");
+      if (!token) {
+        console.error("No token found, please log in.");
+        return;
+      }
 
       try {
         const res = await axios.get("http://localhost:5000/api/tasks/mytasks", {
@@ -39,9 +53,8 @@ export default function TaskList() {
     let data = [...tasks];
 
     if (search.trim()) {
-      data = data.filter((t) =>
-        t.title.toLowerCase().includes(search.toLowerCase())
-      );
+      const q = search.toLowerCase();
+      data = data.filter((t) => t.title?.toLowerCase().includes(q));
     }
 
     if (priorityFilter !== "All") {
@@ -58,7 +71,7 @@ export default function TaskList() {
       data.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
     } else if (sortBy === "priority") {
       const order = { High: 1, Medium: 2, Low: 3 };
-      data.sort((a, b) => order[a.priority] - order[b.priority]);
+      data.sort((a, b) => (order[a.priority] || 99) - (order[b.priority] || 99));
     }
 
     setFiltered(data);
@@ -66,7 +79,7 @@ export default function TaskList() {
   }, [tasks, search, priorityFilter, statusFilter, sortBy]);
 
   // Pagination
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentTasks = filtered.slice(startIndex, startIndex + itemsPerPage);
 
@@ -76,12 +89,68 @@ export default function TaskList() {
     await axios.delete(`http://localhost:5000/api/tasks/deletetask/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    setTasks(tasks.filter((t) => t._id !== id));
+    setTasks((prev) => prev.filter((t) => t._id !== id));
   };
 
-  // Edit
-  const handleEdit = (task) => setEditingTask(task);
-  const closeEditModal = () => setEditingTask(null);
+  // Open edit modal
+  const handleEdit = (task) => {
+    setEditingTask(task);
+    const due = task?.due_date ? String(task.due_date).slice(0, 10) : "";
+    setEditForm({
+      title: task.title || "",
+      description: task.description || "",
+      due_date: due, // yyyy-mm-dd for <input type="date">
+      priority: task.priority || "Medium",
+      isCompleted: Boolean(task.isCompleted),
+    });
+    setSaveError("");
+  };
+
+  const closeEditModal = () => {
+    setEditingTask(null);
+    setSaving(false);
+    setSaveError("");
+  };
+
+  // Update task (uses your original route: /api/tasks/update/:id)
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    if (!editingTask?._id) return;
+
+    setSaving(true);
+    setSaveError("");
+
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.put(
+        `http://localhost:5000/api/tasks/update/${editingTask._id}`,
+        {
+          // send only expected fields
+          title: editForm.title,
+          description: editForm.description,
+          due_date: editForm.due_date, // keep yyyy-mm-dd as your original code did
+          priority: editForm.priority,
+          isCompleted: editForm.isCompleted,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      // Prefer server response if provided, else merge locally
+      const updatedTask = res.data?.task
+        ? res.data.task
+        : { ...editingTask, ...editForm };
+
+      setTasks((prev) =>
+        prev.map((t) => (t._id === editingTask._id ? updatedTask : t))
+      );
+
+      closeEditModal();
+    } catch (err) {
+      console.error("Error updating task:", err.response?.data || err.message);
+      setSaveError(err.response?.data?.message || "Failed to update task.");
+      setSaving(false);
+    }
+  };
 
   return (
     <div
@@ -153,22 +222,108 @@ export default function TaskList() {
           <button
             onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-gray-200 rounded-full hover:bg-gray-300 disabled:opacity-50 transition"
+            className="px-4 py-2 bg-gray-700 text-white rounded-full hover:bg-gray-800 disabled:opacity-50 transition"
           >
             ⬅ Prev
           </button>
           <span className="px-4 py-1 bg-white/80 shadow rounded-xl text-gray-700 font-medium">
-            Page {currentPage} of {totalPages || 1}
+            Page {currentPage} of {totalPages}
           </span>
           <button
             onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-gray-200 rounded-full hover:bg-gray-300 disabled:opacity-50 transition"
+            className="px-4 py-2 bg-gray-700 text-white rounded-full hover:bg-gray-800 disabled:opacity-50 transition"
           >
             Next ➡
           </button>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      {editingTask && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6">
+            <h2 className="text-xl font-bold mb-4">Edit Task</h2>
+
+            {saveError && (
+              <div className="mb-3 text-sm text-red-600">{saveError}</div>
+            )}
+
+            <form onSubmit={handleUpdate} className="space-y-4">
+              <input
+                type="text"
+                value={editForm.title}
+                onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                className="w-full border px-3 py-2 rounded-lg"
+                placeholder="Title"
+                required
+              />
+
+              <textarea
+                value={editForm.description}
+                onChange={(e) =>
+                  setEditForm({ ...editForm, description: e.target.value })
+                }
+                className="w-full border px-3 py-2 rounded-lg"
+                rows="3"
+                placeholder="Description"
+                required
+              />
+
+              <input
+                type="date"
+                value={editForm.due_date}
+                onChange={(e) =>
+                  setEditForm({ ...editForm, due_date: e.target.value })
+                }
+                className="w-full border px-3 py-2 rounded-lg"
+                required
+              />
+
+              <select
+                value={editForm.priority}
+                onChange={(e) =>
+                  setEditForm({ ...editForm, priority: e.target.value })
+                }
+                className="w-full border px-3 py-2 rounded-lg"
+              >
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={editForm.isCompleted}
+                  onChange={(e) =>
+                    setEditForm({ ...editForm, isCompleted: e.target.checked })
+                  }
+                />
+                Mark as Completed
+              </label>
+
+              <div className="flex justify-end gap-4 mt-4">
+                <button
+                  type="button"
+                  onClick={closeEditModal}
+                  className="px-4 py-2 bg-gray-300 rounded-lg"
+                  disabled={saving}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                  disabled={saving}
+                >
+                  {saving ? "Saving..." : "Save Changes"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
